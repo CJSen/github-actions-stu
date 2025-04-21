@@ -23,7 +23,7 @@ jobs:
 
       - name: Build binary (Linux)
         run: |
-          pyinstaller --name=hello-git --onefile main.py
+          pyinstaller --name=hello-git-linux --onefile main.py
 
       - name: Upload Linux binary
         uses: softprops/action-gh-release@v2
@@ -73,7 +73,7 @@ jobs:
 
       - name: Build binary (macOS)
         run: |
-          pyinstaller --name=hello-git --onefile main.py
+          pyinstaller --name=hello-git-macos --onefile main.py
 
       - name: Upload macOS binary
         uses: softprops/action-gh-release@v2
