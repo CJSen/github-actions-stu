@@ -1,0 +1,83 @@
+name: Build and Release
+
+on:
+  push:  # 每次 push 都触发，推荐换成 `tags:` 如果不想每次 push 都触发
+    branches:
+      - main
+  workflow_dispatch:  # 支持手动触发
+
+jobs:
+  build-linux:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          pip install pyinstaller
+
+      - name: Build binary (Linux)
+        run: |
+          pyinstaller --name=hello-git --onefile main.py
+
+      - name: Upload Linux binary
+        uses: softprops/action-gh-release@v2
+        with:
+          files: dist/hello-git
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  build-windows:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          pip install pyinstaller
+
+      - name: Build binary (Windows)
+        run: |
+          pyinstaller --name=hello-git --onefile main.py
+
+      - name: Upload Windows binary
+        uses: softprops/action-gh-release@v2
+        with:
+          files: dist/hello-git.exe
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  build-macos:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          pip install pyinstaller
+
+      - name: Build binary (macOS)
+        run: |
+          pyinstaller --name=hello-git --onefile main.py
+
+      - name: Upload macOS binary
+        uses: softprops/action-gh-release@v2
+        with:
+          files: dist/hello-git
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
