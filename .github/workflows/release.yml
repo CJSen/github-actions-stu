@@ -1,9 +1,9 @@
 name: Build and Release
 
 on:
-  push:  # 每次 push 都触发，推荐换成 `tags:` 如果不想每次 push 都触发
-    branches:
-      - main
+  push:
+    tags:
+      - "v*"  # 每次 push 都触发，推荐换成 `tags:` 如果不想每次 push 都触发
   workflow_dispatch:  # 支持手动触发
 
 jobs:
